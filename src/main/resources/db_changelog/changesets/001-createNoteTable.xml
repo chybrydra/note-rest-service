@@ -4,8 +4,11 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <changeSet author="grymulskil" id="create-table-001">
         <createTable tableName="note">
-            <column name="MODIFIED" type="DATETIME">
-                <constraints primaryKey="true"/>
+            <column name="id" type="INT"/>
+            <column name="version" type="INT"/>
+            <column name="modified" type="DATETIME">
+                <constraints    primaryKey="true"
+                                nullable="false"/>
             </column>
             <column name="created" type="DATETIME"/>
             <column name="title" type="VARCHAR(45)"/>
