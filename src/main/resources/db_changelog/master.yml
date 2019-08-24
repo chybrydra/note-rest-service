@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: db_changelog/changesets/001-createNoteTable.xml
