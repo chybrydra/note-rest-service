@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:mysql://nmysql:3306/notes
+    username: root
+    password: pass
