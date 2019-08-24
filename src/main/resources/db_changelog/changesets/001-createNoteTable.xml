@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="grymulskil" id="create-table-001">
+        <createTable tableName="note">
+            <column name="MODIFIED" type="DATETIME">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created" type="DATETIME"/>
+            <column name="title" type="VARCHAR(45)"/>
+            <column name="content" type="VARCHAR(255)"/>
+            <column name="is_deleted" type="boolean" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
