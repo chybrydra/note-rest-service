@@ -3,6 +3,7 @@ package pl.lukaszgrymulski.noteservice.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import pl.lukaszgrymulski.noteservice.dto.NoteRetrieveDTO;
 import pl.lukaszgrymulski.noteservice.entity.NoteEntity;
 
 import java.time.LocalDateTime;
