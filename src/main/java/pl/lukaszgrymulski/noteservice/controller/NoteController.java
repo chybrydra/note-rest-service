@@ -32,14 +32,15 @@ public class NoteController {
                 .body(allRecentVersionNotes);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteRetrieveDTO> getNote(@PathVariable("id") int id) throws NotFoundException {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(noteService.findById(id));
     }
 
-    @GetMapping("/{id}/history")
+    @GetMapping(value = "/{id}/history",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<NoteRetrieveDTO>> getNoteHistory(@PathVariable("id") int id) {
         List<NoteRetrieveDTO> byIdFullHistory = noteService.findByIdFullHistory(id);
         HttpStatus status = byIdFullHistory.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
@@ -48,13 +49,20 @@ public class NoteController {
                 .body(byIdFullHistory);
     }
 
-    @PostMapping
-    public ResponseEntity<NoteRetrieveDTO> getNoteHistory(@Valid @RequestBody NotePersistDTO notePersistDTO,
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<NoteRetrieveDTO> createNote(@Valid @RequestBody NotePersistDTO notePersistDTO,
                                                           BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) throw new BindException(bindingResult);
         NoteRetrieveDTO noteRetrieveDTO = noteService.save(notePersistDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(noteRetrieveDTO);
+    }
+
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<NoteRetrieveDTO> deleteNote(@PathVariable int id) throws NotFoundException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(noteService.deleteNote(id));
     }
 }

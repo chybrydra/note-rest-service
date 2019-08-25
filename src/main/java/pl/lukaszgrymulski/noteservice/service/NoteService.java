@@ -2,7 +2,6 @@ package pl.lukaszgrymulski.noteservice.service;
 
 import javassist.NotFoundException;
 import lombok.Data;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.lukaszgrymulski.noteservice.dto.NotePersistDTO;
 import pl.lukaszgrymulski.noteservice.dto.NoteRetrieveDTO;
@@ -52,5 +51,27 @@ public class NoteService {
         noteEntity.setVersion(1);
         NoteEntity savedEntity = repository.save(noteEntity);
         return noteMapper.mapNoteEntityToNoteRetrieveDTO(savedEntity);
+    }
+
+    public NoteRetrieveDTO deleteNote(int id) throws NotFoundException {
+        Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
+        if (recentNoteVersionById.isPresent()) {
+            NoteEntity recentNoteEntity = recentNoteVersionById.get();
+            recentNoteEntity.set_deleted(true);
+
+            NoteEntity deletedNoteEntity = new NoteEntity();
+            deletedNoteEntity.setId(id);
+            deletedNoteEntity.setVersion(recentNoteEntity.getVersion()+1);
+            deletedNoteEntity.setModified(LocalDateTime.now());
+            deletedNoteEntity.setCreated(recentNoteEntity.getCreated());
+            deletedNoteEntity.setTitle("");
+            deletedNoteEntity.setContent("");
+            deletedNoteEntity.set_deleted(true);
+
+            repository.save(recentNoteEntity);
+            return noteMapper.mapNoteEntityToNoteRetrieveDTO(repository.save(deletedNoteEntity));
+
+        }
+        throw new NotFoundException("Note to delete was not found");
     }
 }
