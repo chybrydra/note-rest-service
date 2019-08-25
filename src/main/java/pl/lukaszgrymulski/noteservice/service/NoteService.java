@@ -2,6 +2,7 @@ package pl.lukaszgrymulski.noteservice.service;
 
 import javassist.NotFoundException;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.lukaszgrymulski.noteservice.dto.NotePersistDTO;
 import pl.lukaszgrymulski.noteservice.dto.NoteRetrieveDTO;
@@ -16,12 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 @Data
+@Slf4j(topic = "application.logger")
 public class NoteService {
 
     private final NoteRepository repository;
     private final NoteMapper noteMapper;
 
     public List<NoteRetrieveDTO> getAllRecentVersionNotes() throws NotFoundException {
+        log.debug("Retrieving all recent notes...");
         List<NoteEntity> allRecentNoteVersions = repository.findAllRecentNoteVersions();
         if (allRecentNoteVersions.isEmpty()) throw new NotFoundException("No notes were found");
         return allRecentNoteVersions.stream()
@@ -30,6 +33,7 @@ public class NoteService {
     }
 
     public NoteRetrieveDTO findById(int id) throws NotFoundException {
+        log.debug("Retrieving note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {
             return noteMapper.mapNoteEntityToNoteRetrieveDTO(recentNoteVersionById.get());
@@ -38,6 +42,7 @@ public class NoteService {
     }
 
     public List<NoteRetrieveDTO> findByIdFullHistory(int id) throws NotFoundException {
+        log.debug("Retrieving history for note with id={}", id);
         List<NoteEntity> allById = repository.findAllById(id);
         if (allById.isEmpty()) throw new NotFoundException("No notes were found for id=" + id);
         return allById.stream()
@@ -46,6 +51,7 @@ public class NoteService {
     }
 
     public NoteRetrieveDTO save(NotePersistDTO notePersistDTO) {
+        log.debug("Saving new note: {}", notePersistDTO);
         NoteEntity noteEntity = noteMapper.mapNotePersistDTOToNoteEntity(notePersistDTO);
         LocalDateTime now = LocalDateTime.now();
         noteEntity.set_deleted(false);
@@ -58,6 +64,7 @@ public class NoteService {
     }
 
     public NoteRetrieveDTO deleteNote(int id) throws NotFoundException {
+        log.debug("Deleting note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {
             NoteEntity recentNoteEntity = recentNoteVersionById.get();
@@ -81,6 +88,7 @@ public class NoteService {
 
 
     public NoteRetrieveDTO updateNote(NotePersistDTO notePersistDTO, int id) throws NotFoundException {
+        log.debug("Editing note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {
             NoteEntity recentNoteEntity = recentNoteVersionById.get();
