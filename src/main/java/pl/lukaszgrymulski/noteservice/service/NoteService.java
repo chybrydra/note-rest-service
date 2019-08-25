@@ -21,8 +21,10 @@ public class NoteService {
     private final NoteRepository repository;
     private final NoteMapper noteMapper;
 
-    public List<NoteRetrieveDTO> getAllRecentVersionNotes() {
-        return repository.findAllRecentNoteVersions().stream()
+    public List<NoteRetrieveDTO> getAllRecentVersionNotes() throws NotFoundException {
+        List<NoteEntity> allRecentNoteVersions = repository.findAllRecentNoteVersions();
+        if (allRecentNoteVersions.isEmpty()) throw new NotFoundException("No notes were found");
+        return allRecentNoteVersions.stream()
                 .map(entity -> noteMapper.mapNoteEntityToNoteRetrieveDTO(entity))
                 .collect(Collectors.toList());
     }
@@ -35,8 +37,10 @@ public class NoteService {
         throw new NotFoundException("Note with id=" + id + " was not found");
     }
 
-    public List<NoteRetrieveDTO> findByIdFullHistory(int id) {
-        return repository.findAllById(id).stream()
+    public List<NoteRetrieveDTO> findByIdFullHistory(int id) throws NotFoundException {
+        List<NoteEntity> allById = repository.findAllById(id);
+        if (allById.isEmpty()) throw new NotFoundException("No notes were found for id=" + id);
+        return allById.stream()
                 .map(entity -> noteMapper.mapNoteEntityToNoteRetrieveDTO(entity))
                 .collect(Collectors.toList());
     }
@@ -73,5 +77,27 @@ public class NoteService {
 
         }
         throw new NotFoundException("Note to delete was not found");
+    }
+
+
+    public NoteRetrieveDTO updateNote(NotePersistDTO notePersistDTO, int id) throws NotFoundException {
+        Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
+        if (recentNoteVersionById.isPresent()) {
+            NoteEntity recentNoteEntity = recentNoteVersionById.get();
+            recentNoteEntity.set_deleted(true);
+
+            NoteEntity newNoteVersion = new NoteEntity();
+            newNoteVersion.setId(id);
+            newNoteVersion.setVersion(recentNoteEntity.getVersion()+1);
+            newNoteVersion.setCreated(recentNoteEntity.getCreated());
+            newNoteVersion.setModified(LocalDateTime.now());
+            newNoteVersion.setTitle(notePersistDTO.getTitle());
+            newNoteVersion.setContent(notePersistDTO.getContent());
+            newNoteVersion.set_deleted(false);
+
+            repository.save(recentNoteEntity);
+            return noteMapper.mapNoteEntityToNoteRetrieveDTO(repository.save(newNoteVersion));
+        }
+        throw new NotFoundException("Note to edit was not found");
     }
 }

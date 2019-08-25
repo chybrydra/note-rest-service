@@ -24,7 +24,7 @@ public class NoteController {
     private final NoteService noteService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<NoteRetrieveDTO>> getRecentNotesVersions() {
+    public ResponseEntity<List<NoteRetrieveDTO>> getRecentNotesVersions() throws NotFoundException {
         List<NoteRetrieveDTO> allRecentVersionNotes = noteService.getAllRecentVersionNotes();
         HttpStatus status = allRecentVersionNotes.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return ResponseEntity
@@ -41,11 +41,10 @@ public class NoteController {
 
     @GetMapping(value = "/{id}/history",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<NoteRetrieveDTO>> getNoteHistory(@PathVariable("id") int id) {
+    public ResponseEntity<List<NoteRetrieveDTO>> getNoteHistory(@PathVariable("id") int id) throws NotFoundException {
         List<NoteRetrieveDTO> byIdFullHistory = noteService.findByIdFullHistory(id);
-        HttpStatus status = byIdFullHistory.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return ResponseEntity
-                .status(status)
+                .status(HttpStatus.OK)
                 .body(byIdFullHistory);
     }
 
@@ -64,5 +63,13 @@ public class NoteController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(noteService.deleteNote(id));
+    }
+
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<NoteRetrieveDTO> updateNote(@Valid @RequestBody NotePersistDTO notePersistDTO,
+                                                      @PathVariable int id) throws NotFoundException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(noteService.updateNote(notePersistDTO, id));
     }
 }
