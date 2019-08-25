@@ -28,7 +28,7 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity handleNotFoundException(NotFoundException e) {
-        log.error("Not found exception: {}" + e.getLocalizedMessage());
+        log.error("Not found exception: {}", e.getLocalizedMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(e.getLocalizedMessage());
