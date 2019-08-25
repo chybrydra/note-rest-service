@@ -2,6 +2,7 @@ package pl.lukaszgrymulski.noteservice.controller;
 
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +20,14 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/notes")
 @RequiredArgsConstructor
+@Slf4j(topic = "application.logger")
 public class NoteController {
 
     private final NoteService noteService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<NoteRetrieveDTO>> getRecentNotesVersions() throws NotFoundException {
+        log.debug("GET method at '/notes'");
         List<NoteRetrieveDTO> allRecentVersionNotes = noteService.getAllRecentVersionNotes();
         HttpStatus status = allRecentVersionNotes.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return ResponseEntity
@@ -34,6 +37,7 @@ public class NoteController {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteRetrieveDTO> getNote(@PathVariable("id") int id) throws NotFoundException {
+        log.debug("GET method at '/notes/{}'", id);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(noteService.findById(id));
@@ -42,6 +46,7 @@ public class NoteController {
     @GetMapping(value = "/{id}/history",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<NoteRetrieveDTO>> getNoteHistory(@PathVariable("id") int id) throws NotFoundException {
+        log.debug("GET method at '/notes/{}/history'", id);
         List<NoteRetrieveDTO> byIdFullHistory = noteService.findByIdFullHistory(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -51,6 +56,7 @@ public class NoteController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteRetrieveDTO> createNote(@Valid @RequestBody NotePersistDTO notePersistDTO,
                                                           BindingResult bindingResult) throws BindException {
+        log.debug("POST method at '/notes' with data: {}",notePersistDTO);
         if (bindingResult.hasErrors()) throw new BindException(bindingResult);
         NoteRetrieveDTO noteRetrieveDTO = noteService.save(notePersistDTO);
         return ResponseEntity
@@ -60,6 +66,7 @@ public class NoteController {
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteRetrieveDTO> deleteNote(@PathVariable int id) throws NotFoundException {
+        log.debug("DELETE method at '/notes/{}'", id);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(noteService.deleteNote(id));
@@ -68,6 +75,7 @@ public class NoteController {
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteRetrieveDTO> updateNote(@Valid @RequestBody NotePersistDTO notePersistDTO,
                                                       @PathVariable int id) throws NotFoundException {
+        log.debug("PUT method at '/notes/{id}' with data: {}", id, notePersistDTO);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(noteService.updateNote(notePersistDTO, id));
