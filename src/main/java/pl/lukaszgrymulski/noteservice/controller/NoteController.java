@@ -21,10 +21,19 @@ public class NoteController {
     private final NoteService noteService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<NoteRetrieveDTO>> getNotes() {
+    public ResponseEntity<List<NoteRetrieveDTO>> getRecentNotesVersions() {
+        List<NoteRetrieveDTO> allRecentVersionNotes = noteService.getAllRecentVersionNotes();
+        HttpStatus status = allRecentVersionNotes.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return ResponseEntity
+                .status(status)
+                .body(allRecentVersionNotes);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<NoteRetrieveDTO> getNote(@PathVariable("id") int id) throws NotFoundException {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(noteService.getAllRecentVersionNotes());
+                .body(noteService.findById(id));
     }
 
 }
