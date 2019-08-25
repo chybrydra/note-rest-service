@@ -51,6 +51,7 @@ public class NoteService {
     }
 
     public NoteRetrieveDTO save(NotePersistDTO notePersistDTO) {
+        // TODO: 2019-08-26 REFACTOR - extract to method
         log.debug("Saving new note: {}", notePersistDTO);
         NoteEntity noteEntity = noteMapper.mapNotePersistDTOToNoteEntity(notePersistDTO);
         LocalDateTime now = LocalDateTime.now();
@@ -64,6 +65,7 @@ public class NoteService {
     }
 
     public NoteRetrieveDTO deleteNote(int id) throws NotFoundException {
+        // TODO: 2019-08-26 REFACTOR - extract to method
         log.debug("Deleting note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {
@@ -81,13 +83,13 @@ public class NoteService {
 
             repository.save(recentNoteEntity);
             return noteMapper.mapNoteEntityToNoteRetrieveDTO(repository.save(deletedNoteEntity));
-
         }
         throw new NotFoundException("Note to delete was not found");
     }
 
 
     public NoteRetrieveDTO updateNote(NotePersistDTO notePersistDTO, int id) throws NotFoundException {
+        // TODO: 2019-08-26 REFACTOR - extract to method
         log.debug("Editing note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {

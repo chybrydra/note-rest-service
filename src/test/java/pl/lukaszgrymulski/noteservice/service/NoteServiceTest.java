@@ -86,5 +86,9 @@ public class NoteServiceTest {
         verify(noteRepository).save(noteEntity);
     }
 
-
+    @Test(expected = NotFoundException.class)
+    public void deleteNoteShouldThrowNotFoundExceptionIfNoNoteForIdExists() throws NotFoundException {
+        when(noteRepository.findRecentNoteVersionById(ID)).thenReturn(Optional.empty());
+        noteService.deleteNote(ID);
+    }
 }
