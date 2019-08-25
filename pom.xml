@@ -16,9 +16,11 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+
 		<h2.version>1.4.197</h2.version>
 		<jdbc.version>8.0.16</jdbc.version>
 		<liquibase.version>3.7.0</liquibase.version>
+		<modelmapper.version>2.3.0</modelmapper.version>
 	</properties>
 
 	<dependencies>
@@ -54,6 +56,17 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${jdbc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${modelmapper.version}</version>
 		</dependency>
 	</dependencies>
 
