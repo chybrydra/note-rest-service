@@ -51,11 +51,10 @@ public class NoteController {
     @PostMapping
     public ResponseEntity<NoteRetrieveDTO> getNoteHistory(@Valid @RequestBody NotePersistDTO notePersistDTO,
                                                           BindingResult bindingResult) throws BindException {
-        NoteRetrieveDTO noteRetrieveDTO = noteService.save(notePersistDTO);
         if (bindingResult.hasErrors()) throw new BindException(bindingResult);
+        NoteRetrieveDTO noteRetrieveDTO = noteService.save(notePersistDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(noteRetrieveDTO);
-
     }
 }
