@@ -29,9 +29,8 @@ public class NoteController {
     public ResponseEntity<List<NoteRetrieveDTO>> getRecentNotesVersions() throws NotFoundException {
         log.debug("GET method at '/notes'");
         List<NoteRetrieveDTO> allRecentVersionNotes = noteService.getAllRecentVersionNotes();
-        HttpStatus status = allRecentVersionNotes.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return ResponseEntity
-                .status(status)
+                .status(HttpStatus.OK)
                 .body(allRecentVersionNotes);
     }
 
@@ -74,10 +73,12 @@ public class NoteController {
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteRetrieveDTO> updateNote(@Valid @RequestBody NotePersistDTO notePersistDTO,
-                                                      @PathVariable int id) throws NotFoundException {
+                                                      @PathVariable int id,
+                                                      BindingResult bindingResult) throws NotFoundException, BindException {
         log.debug("PUT method at '/notes/{id}' with data: {}", id, notePersistDTO);
+        if (bindingResult.hasErrors()) throw new BindException(bindingResult);
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(HttpStatus.CREATED)
                 .body(noteService.updateNote(notePersistDTO, id));
     }
 }
