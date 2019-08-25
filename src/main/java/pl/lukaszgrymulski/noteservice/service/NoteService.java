@@ -4,11 +4,13 @@ import javassist.NotFoundException;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import pl.lukaszgrymulski.noteservice.dto.NotePersistDTO;
 import pl.lukaszgrymulski.noteservice.dto.NoteRetrieveDTO;
 import pl.lukaszgrymulski.noteservice.entity.NoteEntity;
 import pl.lukaszgrymulski.noteservice.repository.NoteRepository;
 import pl.lukaszgrymulski.noteservice.utils.NoteMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,5 +40,17 @@ public class NoteService {
         return repository.findAllById(id).stream()
                 .map(entity -> noteMapper.mapNoteEntityToNoteRetrieveDTO(entity))
                 .collect(Collectors.toList());
+    }
+
+    public NoteRetrieveDTO save(NotePersistDTO notePersistDTO) {
+        NoteEntity noteEntity = noteMapper.mapNotePersistDTOToNoteEntity(notePersistDTO);
+        LocalDateTime now = LocalDateTime.now();
+        noteEntity.set_deleted(false);
+        noteEntity.setCreated(now);
+        noteEntity.setModified(now);
+        noteEntity.setId(repository.findMaxId()+1);
+        noteEntity.setVersion(1);
+        NoteEntity savedEntity = repository.save(noteEntity);
+        return noteMapper.mapNoteEntityToNoteRetrieveDTO(savedEntity);
     }
 }

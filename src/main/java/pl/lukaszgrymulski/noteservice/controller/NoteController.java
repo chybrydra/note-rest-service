@@ -5,11 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.lukaszgrymulski.noteservice.dto.NotePersistDTO;
 import pl.lukaszgrymulski.noteservice.dto.NoteRetrieveDTO;
-import pl.lukaszgrymulski.noteservice.entity.NoteEntity;
 import pl.lukaszgrymulski.noteservice.service.NoteService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -45,4 +48,14 @@ public class NoteController {
                 .body(byIdFullHistory);
     }
 
+    @PostMapping
+    public ResponseEntity<NoteRetrieveDTO> getNoteHistory(@Valid @RequestBody NotePersistDTO notePersistDTO,
+                                                          BindingResult bindingResult) throws BindException {
+        NoteRetrieveDTO noteRetrieveDTO = noteService.save(notePersistDTO);
+        if (bindingResult.hasErrors()) throw new BindException(bindingResult);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(noteRetrieveDTO);
+
+    }
 }

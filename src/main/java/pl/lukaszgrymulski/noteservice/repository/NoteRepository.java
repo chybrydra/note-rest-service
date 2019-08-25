@@ -18,5 +18,8 @@ public interface NoteRepository extends JpaRepository<NoteEntity, LocalDateTime>
     @Query(value = "SELECT n FROM NoteEntity n WHERE n.is_deleted=0 and n.id=:id")
     Optional<NoteEntity> findRecentNoteVersionById(int id);
 
+    @Query(value = "SELECT MAX(n.id) FROM NoteEntity n")
+    int findMaxId();
+
     List<NoteEntity> findAllById(int id);
 }

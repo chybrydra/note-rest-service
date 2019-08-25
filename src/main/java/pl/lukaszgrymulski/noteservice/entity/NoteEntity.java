@@ -2,6 +2,7 @@ package pl.lukaszgrymulski.noteservice.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.lukaszgrymulski.noteservice.utils.LocalDateTimeAttributeConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,10 +24,11 @@ public class NoteEntity implements Serializable {
     private int version;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime modified;
 
     @NotNull
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime created;
 
     @NotNull
