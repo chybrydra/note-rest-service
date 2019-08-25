@@ -31,6 +31,12 @@ public class NoteService {
         if (recentNoteVersionById.isPresent()) {
             return noteMapper.mapNoteEntityToNoteRetrieveDTO(recentNoteVersionById.get());
         }
-        throw new NotFoundException("Note with id=" + id + "was not found");
+        throw new NotFoundException("Note with id=" + id + " was not found");
+    }
+
+    public List<NoteRetrieveDTO> findByIdFullHistory(int id) {
+        return repository.findAllById(id).stream()
+                .map(entity -> noteMapper.mapNoteEntityToNoteRetrieveDTO(entity))
+                .collect(Collectors.toList());
     }
 }

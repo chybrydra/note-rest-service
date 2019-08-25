@@ -36,4 +36,13 @@ public class NoteController {
                 .body(noteService.findById(id));
     }
 
+    @GetMapping("/{id}/history")
+    public ResponseEntity<List<NoteRetrieveDTO>> getNoteHistory(@PathVariable("id") int id) {
+        List<NoteRetrieveDTO> byIdFullHistory = noteService.findByIdFullHistory(id);
+        HttpStatus status = byIdFullHistory.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return ResponseEntity
+                .status(status)
+                .body(byIdFullHistory);
+    }
+
 }
