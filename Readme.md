@@ -8,14 +8,13 @@
 For running the service the easiest way, we will need:
 - docker or docker toolbox
 - docker-compose which should be included by default to docker/docker toolbox
+- maven release 3.0 or later
 
 ### <a name="dockerize"></a> 2. Mounting database and running project with docker-compose
 ##### To mount database () we will need to:
-1. Have docker running
-2. Open project directory in terminal
-3. Now we should see ```docker-compose.yml``` file in current directory. To check it:
-    - for windows cmd run command: ```dir```
-    - for git or linux bash run command: ```ls```
+1. check if maven is installed and configured by running command: ```mvn -version```
+2. Open main project directory in terminal. You will know you're in the right place, if there is a ```docker-compose.yml``` here. 
+3. Have docker running, you can verify it by running f.e. ```docker ps``` command
 4. Run command: ```docker-compose up```. Docker-compose will:
     - mount mysql database and expose it to port 9001
     - mount phpmyadmin and expose it to port 8081 (user: root, password: pass)
