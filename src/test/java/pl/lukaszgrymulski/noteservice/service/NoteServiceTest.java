@@ -77,11 +77,6 @@ public class NoteServiceTest {
         NotePersistDTO notePersistDTO = mock(NotePersistDTO.class);
         NoteEntity noteEntity = mock(NoteEntity.class);
         when(noteMapper.mapNotePersistDTOToNoteEntity(notePersistDTO)).thenReturn(noteEntity);
-        doNothing().when(noteEntity).set_deleted(anyBoolean());
-        doNothing().when(noteEntity).setCreated(any());
-        doNothing().when(noteEntity).setModified(any());
-        doNothing().when(noteEntity).setVersion(anyInt());
-        doNothing().when(noteEntity).setId(anyInt());
         noteService.save(notePersistDTO);
         verify(noteRepository).save(noteEntity);
     }
@@ -90,5 +85,29 @@ public class NoteServiceTest {
     public void deleteNoteShouldThrowNotFoundExceptionIfNoNoteForIdExists() throws NotFoundException {
         when(noteRepository.findRecentNoteVersionById(ID)).thenReturn(Optional.empty());
         noteService.deleteNote(ID);
+    }
+
+    @Test
+    public void deleteNoteShouldInvokeSaveEntityMethod() throws NotFoundException {
+        NoteEntity noteEntity = mock(NoteEntity.class);
+        when(noteRepository.findRecentNoteVersionById(ID)).thenReturn(Optional.of(noteEntity));
+        noteService.deleteNote(ID);
+        verify(noteRepository).save(noteEntity);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void updateNoteShouldThrowNotFoundExceptionIfNoNoteForIdExists() throws NotFoundException {
+        NotePersistDTO notePersistDTO = mock(NotePersistDTO.class);
+        when(noteRepository.findRecentNoteVersionById(ID)).thenReturn(Optional.empty());
+        noteService.updateNote(notePersistDTO, ID);
+    }
+
+    @Test
+    public void updateNoteShouldInvokeSaveEntityMethod() throws NotFoundException {
+        NotePersistDTO notePersistDTO = mock(NotePersistDTO.class);
+        NoteEntity noteEntity = mock(NoteEntity.class);
+        when(noteRepository.findRecentNoteVersionById(ID)).thenReturn(Optional.of(noteEntity));
+        noteService.updateNote(notePersistDTO, ID);
+        verify(noteRepository).save(noteEntity);
     }
 }

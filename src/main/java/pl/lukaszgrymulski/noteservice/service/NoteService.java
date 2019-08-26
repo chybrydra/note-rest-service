@@ -1,7 +1,7 @@
 package pl.lukaszgrymulski.noteservice.service;
 
 import javassist.NotFoundException;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.lukaszgrymulski.noteservice.dto.NotePersistDTO;
@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Data
+@RequiredArgsConstructor
 @Slf4j(topic = "application.logger")
 public class NoteService {
 
@@ -104,7 +104,6 @@ public class NoteService {
             NoteEntity recentNoteEntity = recentNoteVersionById.get();
             markRecentNoteVersionAsDeleted(recentNoteEntity);
             NoteEntity newNoteVersion = prepareEditedNoteEntity(notePersistDTO, recentNoteEntity);
-            repository.save(recentNoteEntity);
             return noteMapper.mapNoteEntityToNoteRetrieveDTO(repository.save(newNoteVersion));
         }
         throw new NotFoundException("Note to edit was not found");
