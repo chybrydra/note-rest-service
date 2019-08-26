@@ -28,7 +28,7 @@ public class NoteService {
         List<NoteEntity> allRecentNoteVersions = repository.findAllRecentNoteVersions();
         if (allRecentNoteVersions.isEmpty()) throw new NotFoundException("No notes were found");
         return allRecentNoteVersions.stream()
-                .map(entity -> noteMapper.mapNoteEntityToNoteRetrieveDTO(entity))
+                .map(noteMapper::mapNoteEntityToNoteRetrieveDTO)
                 .collect(Collectors.toList());
     }
 
@@ -46,7 +46,7 @@ public class NoteService {
         List<NoteEntity> allById = repository.findAllById(id);
         if (allById.isEmpty()) throw new NotFoundException("No notes were found for id=" + id);
         return allById.stream()
-                .map(entity -> noteMapper.mapNoteEntityToNoteRetrieveDTO(entity))
+                .map(noteMapper::mapNoteEntityToNoteRetrieveDTO)
                 .collect(Collectors.toList());
     }
 

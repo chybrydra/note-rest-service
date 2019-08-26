@@ -75,7 +75,7 @@ public class NoteController {
     public ResponseEntity<NoteRetrieveDTO> updateNote(@Valid @RequestBody NotePersistDTO notePersistDTO,
                                                       @PathVariable int id,
                                                       BindingResult bindingResult) throws NotFoundException, BindException {
-        log.debug("PUT method at '/notes/{id}' with data: {}", id, notePersistDTO);
+        log.debug("PUT method at '/notes/{}' with data: {}", id, notePersistDTO);
         if (bindingResult.hasErrors()) throw new BindException(bindingResult);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

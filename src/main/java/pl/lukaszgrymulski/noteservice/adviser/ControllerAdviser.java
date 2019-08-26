@@ -1,4 +1,4 @@
-package pl.lukaszgrymulski.noteservice.advisor;
+package pl.lukaszgrymulski.noteservice.adviser;
 
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 @ControllerAdvice
 @Slf4j(topic = "application.logger")
-public class ControllerAdvisor {
+public class ControllerAdviser {
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity handleBindException(BindException e) {
