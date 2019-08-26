@@ -42,11 +42,12 @@ To check docker-machine-ip, we need to run command: ```docker-machine ip```
 - ```docker-machine stop [virtual machine name]``` - to stop virtual machine with docker
 - ```docker-machine ls``` - to view docker virtual box name
 
-### <a name="example-usages"></a> 4. EXAMPLE USAGES
+### <a name="example-usages"></a> 4. Example usages
 ##### Example usages using Postman
-1. Create GET request at ```http://localhost:8084/api/notes``` and send.
+(1) Create GET request at ```http://localhost:8084/api/notes``` and send.
 This should return information that no notes were found because no notes were persisted yet.  
-2. Create POST request at ```http://localhost:8084/api/notes``` with body "raw"->"JSON" as follows:
+
+(2) Create POST request at ```http://localhost:8084/api/notes``` with body "raw"->"JSON" as follows:
 ```json
 {
   "title": "first note",
@@ -61,9 +62,12 @@ this will create a first note, then repeat with body:
 }
 ```
 at this moment there are 2 notes
-3. Send request from point 1. - this will show both notes, first note should be returned with id=1 if there were no records
-4. Now send GET request at ```http://localhost:8084/api/notes/1``` to show only the first note.
-5. Send PUT request at ```http://localhost:8084/api/notes/1``` with body:
+
+(3) Send request from point 1. - this will show both notes, first note should be returned with id=1 if there were no records
+
+(4) Now send GET request at ```http://localhost:8084/api/notes/1``` to show only the first note.
+
+(5) Send PUT request at ```http://localhost:8084/api/notes/1``` with body:
 ```json
 {
   "title": "first note",
@@ -77,13 +81,17 @@ and immediately:
   "content": "just edited first note again"
 }
 ```
-6. Do again point 4, this will return recent version of first note
-7. Now sent GET request at ```http://localhost:8084/api/notes/1/history``` to view changes history for the first note
-8. Send DELETE request at ```http://localhost:8084/api/notes/1``` 
-9. Do again point 4 - note is deleted so there is only information that it was not found.
-10. Do again point 7
+(6) Do again point 4, this will return recent version of first note
 
-### <a name="endpoints"></a> 5. ENDPOINTS
+(7) Now sent GET request at ```http://localhost:8084/api/notes/1/history``` to view changes history for the first note
+
+(8) Send DELETE request at ```http://localhost:8084/api/notes/1``` 
+
+(9) Do again point 4 - note is deleted so there is only information that it was not found.
+
+(10) Do again point 7
+
+### <a name="endpoints"></a> 5. Endpoints
 ##### Endpoints:
 - ```GET: /api/notes``` - returns recent versions of all notes as JSON
 - ```GET: /api/notes/{id}``` - returns recent version of a note with id={id}
