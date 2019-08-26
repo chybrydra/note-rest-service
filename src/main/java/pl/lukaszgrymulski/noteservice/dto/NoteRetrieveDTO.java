@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class NoteRetrieveDTO {
 
-    private int id;
-    private int version;
+    private Long id;
+    private Long version;
     private LocalDateTime modified;
     private LocalDateTime created;
     private String title;

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 @Data
 public class NotePersistDTO {
 
-    private final int id;
+    private final Long id;
 
     @NotNull
     @Size(max=45)
