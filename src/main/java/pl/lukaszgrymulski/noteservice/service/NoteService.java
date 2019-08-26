@@ -32,7 +32,7 @@ public class NoteService {
                 .collect(Collectors.toList());
     }
 
-    public NoteRetrieveDTO findById(int id) throws NotFoundException {
+    public NoteRetrieveDTO findById(Long id) throws NotFoundException {
         log.debug("Retrieving note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {
@@ -41,7 +41,7 @@ public class NoteService {
         throw new NotFoundException("Note with id=" + id + " was not found");
     }
 
-    public List<NoteRetrieveDTO> findByIdFullHistory(int id) throws NotFoundException {
+    public List<NoteRetrieveDTO> findByIdFullHistory(Long id) throws NotFoundException {
         log.debug("Retrieving history for note with id={}", id);
         List<NoteEntity> allById = repository.findAllById(id);
         if (allById.isEmpty()) throw new NotFoundException("No notes were found for id=" + id);
@@ -63,12 +63,14 @@ public class NoteService {
         noteEntity.set_deleted(false);
         noteEntity.setCreated(now);
         noteEntity.setModified(now);
-        noteEntity.setId(repository.findMaxId()+1);
-        noteEntity.setVersion(1);
+        Long maxId = repository.findMaxId();
+        long prevId = maxId == null ? 0l : maxId;
+        noteEntity.setId(prevId+1l);
+        noteEntity.setVersion(1l);
         return noteEntity;
     }
 
-    public NoteRetrieveDTO deleteNote(int id) throws NotFoundException {
+    public NoteRetrieveDTO deleteNote(Long id) throws NotFoundException {
         log.debug("Deleting note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {
@@ -97,7 +99,7 @@ public class NoteService {
         return deletedNoteEntity;
     }
 
-    public NoteRetrieveDTO updateNote(NotePersistDTO notePersistDTO, int id) throws NotFoundException {
+    public NoteRetrieveDTO updateNote(NotePersistDTO notePersistDTO, Long id) throws NotFoundException {
         log.debug("Editing note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {

@@ -18,10 +18,10 @@ public class NoteEntity implements Serializable {
     private static final long serialVersionUID = 1956917174759151411L;
 
     @NotNull
-    private int id;
+    private Long id;
 
     @NotNull
-    private int version;
+    private Long version;
 
     @Id
     @Convert(converter = LocalDateTimeAttributeConverter.class)

@@ -26,7 +26,7 @@ public class NoteControllerTest {
     @InjectMocks
     NoteController noteController;
 
-    private static final int ID = 1;
+    private static final long ID = 1;
 
     @Test
     public void getNoteShouldReturnOkStatus() throws NotFoundException {

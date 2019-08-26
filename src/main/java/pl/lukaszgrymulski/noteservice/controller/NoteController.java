@@ -35,7 +35,7 @@ public class NoteController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<NoteRetrieveDTO> getNote(@PathVariable("id") int id) throws NotFoundException {
+    public ResponseEntity<NoteRetrieveDTO> getNote(@PathVariable("id") Long id) throws NotFoundException {
         log.debug("GET method at '/notes/{}'", id);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -44,7 +44,7 @@ public class NoteController {
 
     @GetMapping(value = "/{id}/history",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<NoteRetrieveDTO>> getNoteHistory(@PathVariable("id") int id) throws NotFoundException {
+    public ResponseEntity<List<NoteRetrieveDTO>> getNoteHistory(@PathVariable("id") Long id) throws NotFoundException {
         log.debug("GET method at '/notes/{}/history'", id);
         List<NoteRetrieveDTO> byIdFullHistory = noteService.findByIdFullHistory(id);
         return ResponseEntity
@@ -64,7 +64,7 @@ public class NoteController {
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<NoteRetrieveDTO> deleteNote(@PathVariable int id) throws NotFoundException {
+    public ResponseEntity<NoteRetrieveDTO> deleteNote(@PathVariable Long id) throws NotFoundException {
         log.debug("DELETE method at '/notes/{}'", id);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -73,7 +73,7 @@ public class NoteController {
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteRetrieveDTO> updateNote(@Valid @RequestBody NotePersistDTO notePersistDTO,
-                                                      @PathVariable int id,
+                                                      @PathVariable Long id,
                                                       BindingResult bindingResult) throws NotFoundException, BindException {
         log.debug("PUT method at '/notes/{}' with data: {}", id, notePersistDTO);
         if (bindingResult.hasErrors()) throw new BindException(bindingResult);

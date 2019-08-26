@@ -28,7 +28,7 @@ public class NoteServiceTest {
     @InjectMocks
     NoteService noteService;
 
-    private static final int ID = 1;
+    private static final long ID = 1;
 
     @Test
     public void getAllRecentVersionNotesShouldBeInvoked() throws NotFoundException {
