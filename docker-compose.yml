@@ -13,7 +13,6 @@ services:
             MYSQL_PASSWORD: pass
             MYSQL_ROOT_PASSWORD: pass
         volumes:
-            - ./docker/dump:/docker-entrypoint-initdb.d
             - ./docker/volumes/mysql:/var/lib/mysql
         restart: always
         networks:
@@ -35,7 +34,7 @@ services:
             - note
     nphpmyadmin:
         container_name: nphpmyadmin
-        image: phpmyadmin/phpmyadmin
+        image: phpmyadmin/phpmyadmin:4.8
         links:
             - nmysql:nmysql
         ports:

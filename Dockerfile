@@ -1,3 +1,4 @@
+
 FROM openjdk:8
 ADD target/NoteApp.jar .
 ADD docker/wait .
