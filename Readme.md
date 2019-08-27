@@ -1,10 +1,10 @@
-1. [Project requirements](#easy-requirements) 
+1. [Project requirements](#requirements) 
 2. [Mount database and run app with docker](#dockerize)
 3. [Managing project containers](#container-management)
 4. [Example usages](#example-usages)
 5. [Endpoints](#endpoints)
 
-### <a name="easy-requirements"></a> 1. Project requirements
+### <a name="requirements"></a> 1. Project requirements
 For running the service the easiest way, we will need:
 - docker or docker toolbox
 - docker-compose which should be included by default to docker/docker toolbox
@@ -45,6 +45,7 @@ To check docker-machine-ip, we need to run command: ```docker-machine ip```
 ### <a name="example-usages"></a> 4. Example usages
 ##### Example usages using Postman
 ! for Docker Toolbox use docker-machine ip instead of `localhost`. Command to find docker-machine ip is `docker-machine ip`.  
+! instead of reading this point, you can go to ```http://localhost:8084/api/swagger-ui.html``` which contains swagger-ui service documentation.
 
 (1) Create GET request at ```http://localhost:8084/api/notes``` and send.
 This should return information that no notes were found because no notes were persisted yet.  
@@ -94,6 +95,7 @@ and immediately:
 (10) Do again point 7
 
 ### <a name="endpoints"></a> 5. Endpoints
+! instead of reading this point, you can go to ```http://localhost:8084/api/swagger-ui.html``` which contains swagger-ui service documentation.
 ##### Endpoints:
 - ```GET: /api/notes``` - returns recent versions of all notes as JSON
 - ```GET: /api/notes/{id}``` - returns recent version of a note with id={id}
