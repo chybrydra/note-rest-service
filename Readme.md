@@ -9,7 +9,7 @@
 For running the service the easiest way, we will need:
 - docker or docker toolbox
 - docker-compose which should be included by default to docker/docker toolbox
-- maven release 3.0 or later
+- maven release 3.0 or later installed and configured (mvn command available at terminal)
 
 ### <a name="dockerize"></a> 2. Mounting database and running project with docker-compose
 ##### To mount database and run project we will need to:
@@ -126,6 +126,8 @@ The examples below shows INVALID objects:
 ```
 
 ### <a name="example-usages"></a> 6. App tests:
+To run tests, we have a few approaches. We will need JRE 8 to be installed and configured
+(or later release but it might not work exactly as expected).
 a. To run unit tests:
 - open project root directory in terminal
 - type ```mvn clean test```
