@@ -3,6 +3,7 @@
 3. [Managing project containers](#container-management)
 4. [Example usages](#example-usages)
 5. [Endpoints](#endpoints)
+6. [Running tests](#tests)
 
 ### <a name="requirements"></a> 1. Project requirements
 For running the service the easiest way, we will need:
@@ -11,7 +12,7 @@ For running the service the easiest way, we will need:
 - maven release 3.0 or later
 
 ### <a name="dockerize"></a> 2. Mounting database and running project with docker-compose
-##### To mount database () we will need to:
+##### To mount database and run project we will need to:
 1. check if maven is installed and configured by running command: ```mvn -version```
 2. Open main project directory in terminal. You will know you're in the right place, if there is a ```docker-compose.yml``` here. 
 3. Have docker running, you can verify it by running f.e. ```docker ps``` command
@@ -24,8 +25,7 @@ For running the service the easiest way, we will need:
     - for docker-toolbox: ```http://[docker-machine-ip]:8084/api/notes```
 
 If we use docker toolbox (it is required for some Windows versions) then docker runs on Virtual Machine. 
-In this case, our containers are not available at localhost.
-
+In this case, our containers are not available at localhost, but on docker-machine ip.
 To check docker-machine-ip, we need to run command: ```docker-machine ip```
 
 ### <a name="container-management"></a> 3. Managing project containers
@@ -124,3 +124,25 @@ The examples below shows INVALID objects:
   "title": "some title here"
 }
 ```
+
+### <a name="example-usages"></a> 6. App tests:
+a. To run unit tests:
+- open project root directory in terminal
+- type ```mvn clean test```
+b. To run unit tests with coverage:
+- open project root directory in terminal
+- type ```mvn clean test sonar:sonar```
+this approach requires Sonarqube to be running at localhost:9000
+c. To run integration tests:
+- open project root directory in terminal
+- type ```mvn clean test -Dprofile=test```
+d. To test manually:
+- open project root directory in terminal
+- type ```mvn clean package```
+- type ```cd target```
+- type ```java -jar NoteApp.jar --spring.profiles.active=test```
+- now at ```http://localhost:8084/api/h2``` there is H2 in-memory database available, to log in use:
+    - url: ```jdbc:h2:mem:notes```
+    - user: ```root```
+    - password: ```pass```
+- if you're logged in, you can send requests using postman (examples described [here](#example-usages)) or curl.
