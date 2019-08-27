@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import pl.lukaszgrymulski.noteservice.dto.NotePersistDTO;
