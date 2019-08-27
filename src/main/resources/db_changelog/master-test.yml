@@ -1,5 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db_changelog/changesets/001-createNoteTable.xml
-  - include:
-      file: db_changelog/changesets/002-insertNoteTestData.xml

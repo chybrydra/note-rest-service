@@ -13,7 +13,7 @@ import pl.lukaszgrymulski.noteservice.dto.NotePersistDTO;
 import pl.lukaszgrymulski.noteservice.dto.NoteRetrieveDTO;
 import pl.lukaszgrymulski.noteservice.service.NoteService;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
