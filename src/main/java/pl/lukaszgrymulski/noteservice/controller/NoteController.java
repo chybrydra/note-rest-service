@@ -42,8 +42,7 @@ public class NoteController {
                 .body(noteService.findById(id));
     }
 
-    @GetMapping(value = "/{id}/history",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}/history", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<NoteRetrieveDTO>> getNoteHistory(@PathVariable("id") Long id) throws NotFoundException {
         log.debug("GET method at '/notes/{}/history'", id);
         List<NoteRetrieveDTO> byIdFullHistory = noteService.findByIdFullHistory(id);
@@ -52,7 +51,7 @@ public class NoteController {
                 .body(byIdFullHistory);
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteRetrieveDTO> createNote(@Valid @RequestBody NotePersistDTO notePersistDTO,
                                                           BindingResult bindingResult) throws BindException {
         log.debug("POST method at '/notes' with data: {}",notePersistDTO);
@@ -71,7 +70,7 @@ public class NoteController {
                 .body(noteService.deleteNote(id));
     }
 
-    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<NoteRetrieveDTO> updateNote(@Valid @RequestBody NotePersistDTO notePersistDTO,
                                                       @PathVariable Long id,
                                                       BindingResult bindingResult) throws NotFoundException, BindException {
