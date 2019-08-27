@@ -44,6 +44,8 @@ To check docker-machine-ip, we need to run command: ```docker-machine ip```
 
 ### <a name="example-usages"></a> 4. Example usages
 ##### Example usages using Postman
+! for Docker Toolbox use docker-machine ip instead of `localhost`. Command to find docker-machine ip is `docker-machine ip`.  
+
 (1) Create GET request at ```http://localhost:8084/api/notes``` and send.
 This should return information that no notes were found because no notes were persisted yet.  
 
