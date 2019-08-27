@@ -6,21 +6,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.lukaszgrymulski.noteservice.dto.NotePersistDTO;
 
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class NoteDeleteAllThenCreateIntegrationTest extends NoteIntegrationTestBase {
 
     @Test
+
     public void test00populateAndVerifyIf2NotesArePresent() throws JSONException {
         NotePersistDTO notePersistDTO11 = new NotePersistDTO(null, "t1v1","c1v1");
         NotePersistDTO notePersistDTO21 = new NotePersistDTO(null, "t2v1","c2v1");
