@@ -102,7 +102,7 @@ and immediately:
 (10) Do again point 7
 
 ### <a name="endpoints"></a> 5. Endpoints
-! instead of reading this point, you can go to ```http://localhost:8084/api/swagger-ui.html``` which contains swagger-ui service documentation.
+> Instead of reading this point, you can go to ```http://localhost:8084/api/swagger-ui.html``` which contains swagger-ui service documentation.
 ##### Endpoints:
 - ```GET: /api/notes``` - returns recent versions of all notes as JSON
 - ```GET: /api/notes/{id}``` - returns recent version of a note with id={id}
