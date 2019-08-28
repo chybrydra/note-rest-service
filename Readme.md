@@ -149,4 +149,4 @@ d) To test manually:
 >>- url: ```jdbc:h2:mem:notes```
 >>- user: ```root```
 >>- password: ```pass```
->- if you're logged in, you can send requests using postman (examples described [here](#example-usages)) or using curl.
+>- now you can send requests using postman (examples described [here](#example-usages)) or using curl and see changes directly in database.
