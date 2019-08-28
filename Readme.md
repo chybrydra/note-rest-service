@@ -27,7 +27,8 @@ Requirements to run tests([point 5](#tests))
 5. The service is now available at:
     - for standard docker: ```http://localhost:8084/api/notes```
     - for docker-toolbox: ```http://[docker-machine-ip]:8084/api/notes```
-6. To stop the service use CTRL+C, to rerun, type ```docker-compose up``` again.
+6. To stop the service use CTRL+C, to rerun, type ```docker-compose up``` in project root directory again.
+7. To delete service containers from docker, just type ```docker-compose down -v``` while in project root directory.
 >If we use Docker Toolbox (it is required for some Windows versions) then docker runs on Virtual Machine. 
 >In this case, our containers are not available at localhost, but on docker-machine ip.
 >To check docker-machine-ip, we need to run command: ```docker-machine ip```
