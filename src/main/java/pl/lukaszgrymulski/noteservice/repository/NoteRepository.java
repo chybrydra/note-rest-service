@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface NoteRepository extends JpaRepository<NoteEntity, LocalDateTime> {
 
-    @Query(value = "SELECT n FROM NoteEntity n WHERE n.is_deleted=0")
+    @Query(value = "SELECT n FROM NoteEntity n WHERE n.is_deleted=0 ORDER BY n.id DESC")
     List<NoteEntity> findAllRecentNoteVersions();
 
     @Query(value = "SELECT n FROM NoteEntity n WHERE n.is_deleted=0 and n.id=:id")
@@ -21,5 +21,5 @@ public interface NoteRepository extends JpaRepository<NoteEntity, LocalDateTime>
     @Query(value = "SELECT MAX(n.id) FROM NoteEntity n")
     Long findMaxId();
 
-    List<NoteEntity> findAllById(Long id);
+    List<NoteEntity> findAllByIdOrderByVersionDesc(Long id);
 }
