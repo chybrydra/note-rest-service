@@ -19,6 +19,8 @@ services:
             - note
     napi:
         container_name: napi
+        volumes:
+            - ./docker/volumes/api_logs:/log
         build: .
         hostname: napi
         ports:
