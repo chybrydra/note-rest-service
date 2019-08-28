@@ -23,7 +23,6 @@
 		<modelmapper.version>2.3.0</modelmapper.version>
 		<sonar.maven.plugin.version>3.6.0.1398</sonar.maven.plugin.version>
 		<jacoco.version>0.8.4</jacoco.version>
-		<swagger.version>2.9.2</swagger.version>
 
 		<sonar.exclusions>
 			**/dto/*.java,
@@ -31,8 +30,7 @@
 			**/utils/*.java,
 			**/FieldValidationErrorService.java,
 			**/ControllerAdviser.java,
-			**/NoteServiceApplication.java,
-			**/config/**.java
+			**/NoteServiceApplication.java
 		</sonar.exclusions>
 	</properties>
 
@@ -85,16 +83,6 @@
 			<groupId>org.jacoco</groupId>
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>${jacoco.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${swagger.version}</version>
 		</dependency>
 	</dependencies>
 

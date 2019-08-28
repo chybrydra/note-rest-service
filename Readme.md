@@ -39,8 +39,6 @@ To delete MySQL data we also need to delete directory: {project-root}/docker/vol
 ### <a name="example-usages"></a> 3. Example usages
 ##### Example usages using Postman
 > For Docker Toolbox use docker-machine ip instead of `localhost`. Command to find docker-machine ip is `docker-machine ip`.  
->
-> Instead of reading this point, you can go to ```http://localhost:8084/api/swagger-ui.html``` which contains swagger-ui service documentation.
 
 (1) Create GET request at ```http://localhost:8084/api/notes``` and send.
 This should return information that no notes were found because no notes were persisted yet.  
@@ -90,7 +88,7 @@ and immediately:
 (10) Do again point 7
 
 ### <a name="endpoints"></a> 4. Endpoints
-> Instead of reading this point, you can go to ```http://localhost:8084/api/swagger-ui.html``` which contains swagger-ui service documentation.
+
 ##### Endpoints:
 - ```GET: /api/notes``` - returns recent versions of all notes as JSON
 - ```GET: /api/notes/{id}``` - returns recent version of a note with id={id}
