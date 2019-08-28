@@ -26,9 +26,12 @@ Requirements to run tests([point 5](#tests))
     - mount note service and expose it to port 8084 using OpenJDK 8, which makes us able to run app even without JDK installed locally.   
 5. The service is now available at:
     - for standard docker: ```http://localhost:8084/api/notes```
-    - for docker-toolbox: ```http://[docker-machine-ip]:8084/api/notes```
+    - for docker-toolbox: ```http://[docker-machine-ip]:8084/api/notes``` 
 6. To stop the service use CTRL+C, to rerun, type ```docker-compose up``` in project root directory again.
-7. To delete service containers from docker, just type ```docker-compose down -v``` while in project root directory.
+7. To delete service containers from docker, just type ```docker-compose down -v``` while in project root directory. 
+To delete MySQL data we also need to delete directory: {project-root}/docker/volumes.
+
+>MySQL data is saved and accessible at path {project-root}/docker/volumes.
 >If we use Docker Toolbox (it is required for some Windows versions) then docker runs on Virtual Machine. 
 >In this case, our containers are not available at localhost, but on docker-machine ip.
 >To check docker-machine-ip, we need to run command: ```docker-machine ip```
