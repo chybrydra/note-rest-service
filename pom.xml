@@ -31,7 +31,8 @@
 			**/utils/*.java,
 			**/FieldValidationErrorService.java,
 			**/ControllerAdviser.java,
-			**/NoteServiceApplication.java
+			**/NoteServiceApplication.java,
+			**/config/**.java
 		</sonar.exclusions>
 	</properties>
 
