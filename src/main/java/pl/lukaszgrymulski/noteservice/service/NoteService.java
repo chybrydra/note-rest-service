@@ -43,7 +43,7 @@ public class NoteService {
 
     public List<NoteRetrieveDTO> findByIdFullHistory(Long id) throws NotFoundException {
         log.debug("Retrieving history for note with id={}", id);
-        List<NoteEntity> allById = repository.findAllById(id);
+        List<NoteEntity> allById = repository.findAllByIdOrderByVersionDesc(id);
         if (allById.isEmpty()) throw new NotFoundException("No notes were found for id=" + id);
         return allById.stream()
                 .map(noteMapper::mapNoteEntityToNoteRetrieveDTO)

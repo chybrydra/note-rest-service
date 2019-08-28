@@ -61,14 +61,14 @@ public class NoteServiceTest {
     @Test
     public void findAllByIdShouldBeInvoked() throws NotFoundException {
         ArrayList noteList = mock(ArrayList.class);
-        when(noteRepository.findAllById(ID)).thenReturn(noteList);
+        when(noteRepository.findAllByIdOrderByVersionDesc(ID)).thenReturn(noteList);
         noteService.findByIdFullHistory(ID);
-        verify(noteRepository).findAllById(ID);
+        verify(noteRepository).findAllByIdOrderByVersionDesc(ID);
     }
 
     @Test(expected = NotFoundException.class)
     public void findByIdFullHistoryShouldThrowNotFoundException() throws NotFoundException {
-        when(noteRepository.findAllById(ID)).thenReturn(new ArrayList<>());
+        when(noteRepository.findAllByIdOrderByVersionDesc(ID)).thenReturn(new ArrayList<>());
         noteService.findByIdFullHistory(ID);
     }
 
