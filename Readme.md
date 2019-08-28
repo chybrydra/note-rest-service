@@ -117,7 +117,7 @@ The examples below shows INVALID objects:
 }
 ```
 
-### <a name="example-usages"></a> 5. App tests:
+### <a name="tests"></a> 5. App tests:
 
 To run tests, we have a few approaches. We will need JRE 8 to be installed and configured
 (or later release but it might not work exactly as expected).
