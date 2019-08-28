@@ -6,16 +6,21 @@
 6. [Running tests](#tests)
 
 ### <a name="requirements"></a> 1. Project requirements
-For running the service the easiest way, we will need:
+For running the service ([point 2](#dockerize),[point3](#container-management)), we will need:
 - docker or docker toolbox
 - docker-compose which should be included by default to docker/docker toolbox
 - maven release 3.0 or later installed and configured (mvn command available at terminal)
 
+Requirements to run tests([point 6](#tests))
+- java 8 (or later release, but 8 is recommended)
+- optionally Sonarqube working at localhost:9000 if we want coverage
+
 ### <a name="dockerize"></a> 2. Mounting database and running project with docker-compose
 ##### To mount database and run project we will need to:
-1. check if maven is installed and configured by running command: ```mvn -version```
-2. Open main project directory in terminal. You will know you're in the right place, if there is a ```docker-compose.yml``` here. 
-3. Have docker running, you can verify it by running f.e. ```docker ps``` command
+
+1. Check if maven is installed and configured by running command: ```mvn -version```
+2. Open project root directory in terminal. You will know you're in the right place, if there is a ```docker-compose.yml``` here. 
+3. Have docker running, you can verify it by running f.e. ```docker``` command which should list some options.
 4. Run command: ```docker-compose up```. Docker-compose will:
     - mount mysql database and expose it to port 9001
     - mount phpmyadmin and expose it to port 8081 (user: root, password: pass)
@@ -24,28 +29,30 @@ For running the service the easiest way, we will need:
     - for standard docker: ```http://localhost:8084/api/notes```
     - for docker-toolbox: ```http://[docker-machine-ip]:8084/api/notes```
 
-If we use docker toolbox (it is required for some Windows versions) then docker runs on Virtual Machine. 
-In this case, our containers are not available at localhost, but on docker-machine ip.
-To check docker-machine-ip, we need to run command: ```docker-machine ip```
+>If we use Docker Toolbox (it is required for some Windows versions) then docker runs on Virtual Machine. 
+>In this case, our containers are not available at localhost, but on docker-machine ip.
+>To check docker-machine-ip, we need to run command: ```docker-machine ip```
 
 ### <a name="container-management"></a> 3. Managing project containers
+
 ##### Now there are 3 new containers running. We only need a few docker commands to control containers:
 - ```docker ps``` - shows all running containers
 - ```docker ps -a``` - shows all containers (even those that are stopped)
 - ```docker stop <container hash> <another container hash> ...``` - stop container, we usually need only 3 first characters of the hash as they should be unique
 - ```docker start <container hash> <another container hash> ...``` - run container, also needs only 3 characters of hash
 - to see container hashes we use ```docker ps [-a]```
-- ```docker rm ```
+- ```docker rm <container hash>``` removes container 
 
 ##### Additionally for Docker Toolbox:
 - ``` docker-machine ip``` - to get our docker ip address
-- ```docker-machine stop [virtual machine name]``` - to stop virtual machine with docker
+- ```docker-machine stop <virtual machine name>``` - to stop virtual machine with docker
 - ```docker-machine ls``` - to view docker virtual box name
 
 ### <a name="example-usages"></a> 4. Example usages
 ##### Example usages using Postman
-! for Docker Toolbox use docker-machine ip instead of `localhost`. Command to find docker-machine ip is `docker-machine ip`.  
-! instead of reading this point, you can go to ```http://localhost:8084/api/swagger-ui.html``` which contains swagger-ui service documentation.
+> For Docker Toolbox use docker-machine ip instead of `localhost`. Command to find docker-machine ip is `docker-machine ip`.  
+>
+> Instead of reading this point, you can go to ```http://localhost:8084/api/swagger-ui.html``` which contains swagger-ui service documentation.
 
 (1) Create GET request at ```http://localhost:8084/api/notes``` and send.
 This should return information that no notes were found because no notes were persisted yet.  
@@ -134,17 +141,17 @@ a. To run unit tests:
 b. To run unit tests with coverage:
 - open project root directory in terminal
 - type ```mvn clean test sonar:sonar```
-this approach requires Sonarqube to be running at localhost:9000
+this approach requires Sonarqube to be running at localhost:9000, then we can visit localhost:9000 to find project coverage.
 c. To run integration tests:
 - open project root directory in terminal
 - type ```mvn clean test -Dprofile=test```
 d. To test manually:
 - open project root directory in terminal
-- type ```mvn clean package```
+- type ```mvn clean package``` to create *.jar
 - type ```cd target```
 - type ```java -jar NoteApp.jar --spring.profiles.active=test```
-- now at ```http://localhost:8084/api/h2``` there is H2 in-memory database available, to log in use:
+- now at ```http://localhost:8084/api/h2``` there is an H2 in-memory database available, to log in use:
     - url: ```jdbc:h2:mem:notes```
     - user: ```root```
     - password: ```pass```
-- if you're logged in, you can send requests using postman (examples described [here](#example-usages)) or curl.
+- if you're logged in, you can send requests using postman (examples described [here](#example-usages)) or using curl.
