@@ -19,9 +19,7 @@ public class NotePersistToEmptyDataBaseIntegrationTest extends NoteIntegrationTe
     @Test
     public void test01createNewNoteShouldAddNoteWithId1() throws JSONException {
         NotePersistDTO notePersistDTO = new NotePersistDTO(1L, "kek","kekson");
-        HttpEntity<NotePersistDTO> entity = new HttpEntity<NotePersistDTO>(notePersistDTO, headers);
-        ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/api/notes"),
-                HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = sendPost(notePersistDTO);
         String expected = "{id:1,version:1}";
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }

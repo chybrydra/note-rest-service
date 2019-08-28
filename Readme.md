@@ -36,6 +36,7 @@ Requirements to run tests([point 5](#tests))
 This will not delete MySQL data though. To delete MySQL data we also need to delete directory: {project-root}/docker/volumes.
 
 >MySQL data is stored and accessible at path {project-root}/docker/volumes.
+>At {project-root}/docker/volumes there is also mapped directory with service logs
 
 >If we use Docker Toolbox (it is required for some Windows versions) then docker runs on Virtual Machine. 
 >In this case, our containers are not available at localhost, but on docker-machine ip.

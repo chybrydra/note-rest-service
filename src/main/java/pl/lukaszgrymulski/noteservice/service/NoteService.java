@@ -1,12 +1,13 @@
 package pl.lukaszgrymulski.noteservice.service;
 
-import javassist.NotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.lukaszgrymulski.noteservice.dto.NotePersistDTO;
 import pl.lukaszgrymulski.noteservice.dto.NoteRetrieveDTO;
 import pl.lukaszgrymulski.noteservice.entity.NoteEntity;
+import pl.lukaszgrymulski.noteservice.exception.RecordNotFoundException;
 import pl.lukaszgrymulski.noteservice.repository.NoteRepository;
 import pl.lukaszgrymulski.noteservice.utils.NoteMapper;
 
@@ -23,28 +24,28 @@ public class NoteService {
     private final NoteRepository repository;
     private final NoteMapper noteMapper;
 
-    public List<NoteRetrieveDTO> getAllRecentVersionNotes() throws NotFoundException {
+    public List<NoteRetrieveDTO> getAllRecentVersionNotes() throws RecordNotFoundException {
         log.debug("Retrieving all recent notes...");
         List<NoteEntity> allRecentNoteVersions = repository.findAllRecentNoteVersions();
-        if (allRecentNoteVersions.isEmpty()) throw new NotFoundException("No notes were found");
+        if (allRecentNoteVersions.isEmpty()) throw new RecordNotFoundException("No notes were found");
         return allRecentNoteVersions.stream()
                 .map(noteMapper::mapNoteEntityToNoteRetrieveDTO)
                 .collect(Collectors.toList());
     }
 
-    public NoteRetrieveDTO findById(Long id) throws NotFoundException {
+    public NoteRetrieveDTO findById(Long id) throws RecordNotFoundException {
         log.debug("Retrieving note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {
             return noteMapper.mapNoteEntityToNoteRetrieveDTO(recentNoteVersionById.get());
         }
-        throw new NotFoundException("Note with id=" + id + " was not found");
+        throw new RecordNotFoundException("Note with id=" + id + " was not found");
     }
 
-    public List<NoteRetrieveDTO> findByIdFullHistory(Long id) throws NotFoundException {
+    public List<NoteRetrieveDTO> findByIdFullHistory(Long id) throws RecordNotFoundException {
         log.debug("Retrieving history for note with id={}", id);
         List<NoteEntity> allById = repository.findAllByIdOrderByVersionDesc(id);
-        if (allById.isEmpty()) throw new NotFoundException("No notes were found for id=" + id);
+        if (allById.isEmpty()) throw new RecordNotFoundException("No notes were found for id=" + id);
         return allById.stream()
                 .map(noteMapper::mapNoteEntityToNoteRetrieveDTO)
                 .collect(Collectors.toList());
@@ -70,7 +71,7 @@ public class NoteService {
         return noteEntity;
     }
 
-    public NoteRetrieveDTO deleteNote(Long id) throws NotFoundException {
+    public NoteRetrieveDTO deleteNote(Long id) throws RecordNotFoundException {
         log.debug("Deleting note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {
@@ -79,7 +80,7 @@ public class NoteService {
             markRecentNoteVersionAsDeleted(recentNoteEntity);
             return noteMapper.mapNoteEntityToNoteRetrieveDTO(repository.save(deletedNoteEntity));
         }
-        throw new NotFoundException("Note to delete was not found");
+        throw new RecordNotFoundException("Note to delete was not found");
     }
 
     private void markRecentNoteVersionAsDeleted(NoteEntity recentNoteEntity) {
@@ -99,7 +100,7 @@ public class NoteService {
         return deletedNoteEntity;
     }
 
-    public NoteRetrieveDTO updateNote(NotePersistDTO notePersistDTO, Long id) throws NotFoundException {
+    public NoteRetrieveDTO updateNote(NotePersistDTO notePersistDTO, Long id) throws RecordNotFoundException {
         log.debug("Editing note with id={}", id);
         Optional<NoteEntity> recentNoteVersionById = repository.findRecentNoteVersionById(id);
         if (recentNoteVersionById.isPresent()) {
@@ -108,7 +109,7 @@ public class NoteService {
             NoteEntity newNoteVersion = prepareEditedNoteEntity(notePersistDTO, recentNoteEntity);
             return noteMapper.mapNoteEntityToNoteRetrieveDTO(repository.save(newNoteVersion));
         }
-        throw new NotFoundException("Note to edit was not found");
+        throw new RecordNotFoundException("Note to edit was not found");
     }
 
     private NoteEntity prepareEditedNoteEntity(NotePersistDTO notePersistDTO, NoteEntity recentNoteEntity) {
