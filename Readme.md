@@ -133,25 +133,29 @@ The examples below shows INVALID objects:
 ```
 
 ### <a name="example-usages"></a> 6. App tests:
+
 To run tests, we have a few approaches. We will need JRE 8 to be installed and configured
 (or later release but it might not work exactly as expected).
-a. To run unit tests:
-- open project root directory in terminal
-- type ```mvn clean test```
-b. To run unit tests with coverage:
-- open project root directory in terminal
-- type ```mvn clean test sonar:sonar```
-this approach requires Sonarqube to be running at localhost:9000, then we can visit localhost:9000 to find project coverage.
-c. To run integration tests:
-- open project root directory in terminal
-- type ```mvn clean test -Dprofile=test```
-d. To test manually:
-- open project root directory in terminal
-- type ```mvn clean package``` to create *.jar
-- type ```cd target```
-- type ```java -jar NoteApp.jar --spring.profiles.active=test```
-- now at ```http://localhost:8084/api/h2``` there is an H2 in-memory database available, to log in use:
-    - url: ```jdbc:h2:mem:notes```
-    - user: ```root```
-    - password: ```pass```
-- if you're logged in, you can send requests using postman (examples described [here](#example-usages)) or using curl.
+
+a) To run unit tests:
+>- open project root directory in terminal
+>- type ```mvn clean test```
+
+b) To run unit tests with coverage (this approach requires Sonarqube to be running at localhost:9000, then we can visit localhost:9000 to find project coverage):
+>- open project root directory in terminal
+>- type ```mvn clean test sonar:sonar```
+
+c) To run integration tests:
+>- open project root directory in terminal
+>- type ```mvn clean test -Dprofile=test```
+
+d) To test manually:
+>- open project root directory in terminal
+>- type ```mvn clean package``` to create *.jar
+>- type ```cd target```
+>- type ```java -jar NoteApp.jar --spring.profiles.active=test```
+>- now at ```http://localhost:8084/api/h2``` there is an H2 in-memory database available, to log in use:
+>>- url: ```jdbc:h2:mem:notes```
+>>- user: ```root```
+>>- password: ```pass```
+>- if you're logged in, you can send requests using postman (examples described [here](#example-usages)) or using curl.
