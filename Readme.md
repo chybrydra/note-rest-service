@@ -1,17 +1,16 @@
 1. [Project requirements](#requirements) 
 2. [Mount database and run app with docker](#dockerize)
-3. [Managing project containers](#container-management)
-4. [Example usages](#example-usages)
-5. [Endpoints](#endpoints)
-6. [Running tests](#tests)
+3. [Example usages](#example-usages)
+4. [Endpoints](#endpoints)
+5. [Running tests](#tests)
 
 ### <a name="requirements"></a> 1. Project requirements
-For running the service ([point 2](#dockerize),[point3](#container-management)), we will need:
+For running the service ([point 2](#dockerize)), we will need:
 - docker or docker toolbox
 - docker-compose which should be included by default to docker/docker toolbox
 - maven release 3.0 or later installed and configured (mvn command available at terminal)
 
-Requirements to run tests([point 6](#tests))
+Requirements to run tests([point 5](#tests))
 - java 8 (or later release, but 8 is recommended)
 - optionally Sonarqube working at localhost:9000 if we want coverage
 
@@ -28,27 +27,12 @@ Requirements to run tests([point 6](#tests))
 5. The service is now available at:
     - for standard docker: ```http://localhost:8084/api/notes```
     - for docker-toolbox: ```http://[docker-machine-ip]:8084/api/notes```
-
+6. To stop the service use CTRL+C, to rerun, type ```docker-compose up``` again.
 >If we use Docker Toolbox (it is required for some Windows versions) then docker runs on Virtual Machine. 
 >In this case, our containers are not available at localhost, but on docker-machine ip.
 >To check docker-machine-ip, we need to run command: ```docker-machine ip```
 
-### <a name="container-management"></a> 3. Managing project containers
-
-##### Now there are 3 new containers running. We only need a few docker commands to control containers:
-- ```docker ps``` - shows all running containers
-- ```docker ps -a``` - shows all containers (even those that are stopped)
-- ```docker stop <container hash> <another container hash> ...``` - stop container, we usually need only 3 first characters of the hash as they should be unique
-- ```docker start <container hash> <another container hash> ...``` - run container, also needs only 3 characters of hash
-- to see container hashes we use ```docker ps [-a]```
-- ```docker rm <container hash>``` removes container 
-
-##### Additionally for Docker Toolbox:
-- ``` docker-machine ip``` - to get our docker ip address
-- ```docker-machine stop <virtual machine name>``` - to stop virtual machine with docker
-- ```docker-machine ls``` - to view docker virtual box name
-
-### <a name="example-usages"></a> 4. Example usages
+### <a name="example-usages"></a> 3. Example usages
 ##### Example usages using Postman
 > For Docker Toolbox use docker-machine ip instead of `localhost`. Command to find docker-machine ip is `docker-machine ip`.  
 >
@@ -101,7 +85,7 @@ and immediately:
 
 (10) Do again point 7
 
-### <a name="endpoints"></a> 5. Endpoints
+### <a name="endpoints"></a> 4. Endpoints
 > Instead of reading this point, you can go to ```http://localhost:8084/api/swagger-ui.html``` which contains swagger-ui service documentation.
 ##### Endpoints:
 - ```GET: /api/notes``` - returns recent versions of all notes as JSON
@@ -132,7 +116,7 @@ The examples below shows INVALID objects:
 }
 ```
 
-### <a name="example-usages"></a> 6. App tests:
+### <a name="example-usages"></a> 5. App tests:
 
 To run tests, we have a few approaches. We will need JRE 8 to be installed and configured
 (or later release but it might not work exactly as expected).
