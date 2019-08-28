@@ -19,6 +19,7 @@
 
 		<h2.version>1.4.197</h2.version>
 		<jdbc.version>8.0.16</jdbc.version>
+		<lombok.version>1.18.4</lombok.version>
 		<liquibase.version>3.7.0</liquibase.version>
 		<modelmapper.version>2.3.0</modelmapper.version>
 		<sonar.maven.plugin.version>3.6.0.1398</sonar.maven.plugin.version>
@@ -71,7 +72,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.4</version>
+			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
