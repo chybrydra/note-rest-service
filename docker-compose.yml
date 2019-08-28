@@ -27,7 +27,9 @@ services:
             - nmysql
         environment:
             WAIT_HOSTS: nmysql:3306
+            WAIT_HOSTS_TIMEOUT: 120
             WAIT_BEFORE_HOSTS: 10
+            WAIT_SLEEP_INTERVAL: 5
         links:
             - nmysql:nmysql
         networks:
