@@ -95,7 +95,7 @@ and immediately:
 - ```GET: /api/notes/{id}/history``` - returns change history for note with id={id}
 - ```POST: /api/notes``` - saves new note if request body contains proper object (description below)
 - ```PUT: /api/notes/{id}``` - updates note with id={id} if request body contains proper object
-- ```DELETE: /api/notes/{id}``` - deletes note with id={id}
+- ```DELETE: /api/notes/{id}``` - deletes note with id={id} (it is not really deleted, but accessible only at GET:api/notes/{id}/history)
 
 ##### Proper object for POST and PUT methods:
 ```json
