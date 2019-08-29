@@ -7,8 +7,8 @@
 ### <a name="requirements"></a> 1. Project requirements
 For running the service ([point 2](#dockerize)), we will need:
 - docker or docker toolbox
-- docker-compose which should be included by default to docker/docker toolbox
-- maven release 3.0 or later installed and configured (mvn command available at terminal)
+- docker-compose which should be included by default to docker/docker toolbox (1.11.2 version of docker-compose was used for development)
+- maven release 3.0 or later release installed and configured (mvn command available at terminal)
 
 Requirements to run tests([point 5](#tests))
 - java 8 (or later release, but 8 is recommended)
