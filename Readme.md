@@ -96,12 +96,24 @@ and immediately:
 ### <a name="endpoints"></a> 4. Endpoints
 
 ##### Endpoints:
-- ```GET: /api/notes``` - returns recent versions of all notes as JSON
+- ```GET: /api/notes``` - returns recent versions of all notes as JSON 
+>Request success: status 200 OK \
+>Request error: status 404 NOT FOUND 
 - ```GET: /api/notes/{id}``` - returns recent version of a note with id={id}
+>Request success: status 200 OK \
+>Request error: status 404 NOT FOUND
 - ```GET: /api/notes/{id}/history``` - returns change history for note with id={id}
+>Request success: status 200 OK \
+>Request error: status 404 NOT FOUND
 - ```POST: /api/notes``` - saves new note if request body contains proper object (description below)
+>Request success: status 201 CREATED \
+>Request error: status 400 BAD REQUEST
 - ```PUT: /api/notes/{id}``` - updates note with id={id} if request body contains proper object
+>Request success: status 201 CREATED \
+>Request error: status 400 BAD REQUEST / 404 NOT FOUND
 - ```DELETE: /api/notes/{id}``` - deletes note with id={id} (it is not really deleted, but accessible only at GET:api/notes/{id}/history)
+>Request success: status 200 OK \
+>Request error: status 404 NOT FOUND
 
 ##### Proper object for POST and PUT methods:
 ```json
