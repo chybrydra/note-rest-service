@@ -7,12 +7,15 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class ApiError {
+public class ApiError implements Serializable {
+
+    private static final long serialVersionUID = -1901393856235704692L;
 
     private final HttpStatus status;
 

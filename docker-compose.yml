@@ -19,6 +19,7 @@ services:
             - note
     napi:
         container_name: napi
+        image: note-service:1.0
         volumes:
             - ./docker/volumes/api_logs:/log
         build: .

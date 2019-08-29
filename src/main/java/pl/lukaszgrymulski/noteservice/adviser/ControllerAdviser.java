@@ -12,22 +12,25 @@ import pl.lukaszgrymulski.noteservice.service.FieldValidationErrorService;
 import pl.lukaszgrymulski.noteservice.utils.ApiError;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
-
-;
 
 @ControllerAdvice
 @Slf4j(topic = "application.logger")
 public class ControllerAdviser {
 
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<Map> handleBindException(BindException e) {
+    public ResponseEntity<ApiError> handleBindException(HttpServletRequest request, BindException e) {
         BindingResult bindingResult = e.getBindingResult();
-        Map bindingResultMapped = FieldValidationErrorService.getErrorMap(bindingResult);
-        log.error("Error while binding: {}", bindingResultMapped);
+        String bindingResultString = FieldValidationErrorService.getAsOneLineString(bindingResult);
+
+        log.error("Error while binding: {}", bindingResultString);
+        ApiError apiError = ApiError.status(HttpStatus.BAD_REQUEST)
+                .path(request)
+                .message("Binding exception.")
+                .debugMessage(bindingResultString)
+                .build();
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(bindingResultMapped);
+                .body(apiError);
     }
 
     @ExceptionHandler(RecordNotFoundException.class)

@@ -136,6 +136,34 @@ The examples below shows INVALID objects:
 }
 ```
 
+For error, json like below is returned in http response body:
+```json
+{
+    "status": "NOT_FOUND",
+    "timestamp": "29-08-2019 12:17:04 PM",
+    "message": "Some message",
+    "debugMessage": "Some more info",
+    "errorPath": "http://localhost:8084/api/notes/9"
+}
+```
+
+F.e. if we send POST Request ```http://localhost:8084/api/notes```
+```json
+{
+	"title": "aaabb"
+}
+```
+which is missing "content", then we will have returned:
+```json
+{
+    "status": "BAD_REQUEST",
+    "timestamp": "29-08-2019 12:17:29 PM",
+    "message": "Binding exception.",
+    "debugMessage": "content: must not be null;",
+    "errorPath": "http://localhost:8084/api/notes"
+}
+```
+
 ### <a name="tests"></a> 5. App tests:
 
 To run tests, we have a few approaches. We will need JRE 8 to be installed and configured
