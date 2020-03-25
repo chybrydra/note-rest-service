@@ -1,0 +1,57 @@
+version: "3"
+services:
+    nmysql:
+        container_name: nmysql
+        hostname: nmysql
+        image: mysql:8.0.17
+        command: --default-authentication-plugin=mysql_native_password
+        ports: 
+            - 9001:3306
+        environment:
+            MYSQL_DATABASE: notes
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_ROOT_PASSWORD: pass
+        volumes:
+            - ./docker/volumes/mysql:/var/lib/mysql
+        restart: always
+        networks:
+            - note
+    napi:
+        container_name: napi
+        image: note-service:1.0
+        volumes:
+            - ./docker/volumes/api_logs:/log
+        build: .
+        hostname: napi
+        ports:
+            - 8084:8084
+        depends_on:
+            - nmysql
+        environment:
+            WAIT_HOSTS: nmysql:3306
+            WAIT_HOSTS_TIMEOUT: 120
+            WAIT_BEFORE_HOSTS: 10
+            WAIT_SLEEP_INTERVAL: 5
+            TZ: Europe/Warsaw
+        links:
+            - nmysql:nmysql
+        networks:
+            - note
+    nphpmyadmin:
+        container_name: nphpmyadmin
+        image: phpmyadmin/phpmyadmin:4.8
+        links:
+            - nmysql:nmysql
+        ports:
+            - 8081:80
+        environment:
+            PMA_HOST: nmysql
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_ROOT_PASSWORD: pass
+        networks:
+            - note
+networks:
+    note:
+        driver: bridge
